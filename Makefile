@@ -1,3 +1,4 @@
+APPNAME=Four
 PASS=pitecan
 ZIPALIGN=/Users/masui/Systems/android-sdk-macosx/build-tools/25.0.2/zipalign
 KEYSTORE=.keystore
@@ -19,7 +20,7 @@ release: icons
 		-signedjar ${APKPATH}/android-release-signed.apk \
 		-sigalg SHA1withRSA \
 		-digestalg SHA1 \
-		${APKPATH}/android-release-unsigned.apk FindWord
+		${APKPATH}/android-release-unsigned.apk ${APPNAME}
 	${ZIPALIGN} \
 		-v 4 \
 		${APKPATH}/android-release-signed.apk \
@@ -38,7 +39,7 @@ genkey:
 		-genkey -v \
 		-keystore ${KEYSTORE} \
 		-storepass ${PASS} \
-		-alias FindWord \
+		-alias ${APPNAME} \
 		-keyalg RSA \
 		-validity 10000
 
@@ -54,7 +55,7 @@ icons:
 	convert -scale 192x192 ${ICON} platforms/android/res/mipmap-xxxhdpi/icon.png
 
 #sign:
-#	cd platforms/android/build/outputs/apk; jarsigner -verbose -keystore .keystore android-release-unsigned.apk FindWord
+#	cd platforms/android/build/outputs/apk; jarsigner -verbose -keystore .keystore android-release-unsigned.apk ${APPNAME}
 #
 #signcheck:
 #	cd platforms/android/build/outputs/apk; jarsigner -verify -verbose -certs android-release-signed-aligned.apk
@@ -63,7 +64,7 @@ icons:
 #	/Users/masui/Systems/android-sdk-macosx/build-tools/25.0.2/zipalign -v 4 android-release-unsigned.apk
 
 # プロジェクト作成
-# cordova create FindWord findword.com.pitecan FindWord
+# cordova create ${APPNAME} findword.com.pitecan ${APPNAME}
 # Android追加
 # cordova platforms add android
 # cordova plugin add admob
