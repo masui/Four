@@ -1,16 +1,51 @@
 body {
-    background-color:#eee;
+    margin:0;
+    border:0;
+    padding:0;
 }
+
 .char {
+    position:absolute;
     text-shadow: 0px 2px 0px #fff;
-    font-size: 70;
     font-weight: bold;
-    background-color: #999;
-    padding:20 20 15 20;
-    -webkit-border-radius: 8px; 
+    top:10;
+    left:20;
+    
+    font-size: 70;
 }
-a#google {
+
+.div {
+    background-color: #999;
+    position:absolute;
+    height:120;
+    width:120;
+    border-radius: 8px;
+}
+
+#div0 {
+    top:50;
+    left:50;
+}
+
+#div1 {
+    top:50;
+    left:200;
+}
+
+#div2 {
+    top:200;
+    left:50;
+}
+#div3 {
+    top:200;
+    left:200;
+}
+
+#google {
     color:#333;
+    font-size:30;
+}
+
+#query {
     text-decoration:none;
-    font-size:20;
 }

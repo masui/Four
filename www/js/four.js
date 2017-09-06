@@ -1,87 +1,82 @@
 //
 // four.js
 //
-var place = [];
-var char = [];
-var dispchar = [];
-var word;
-var hidden;
+var word; // 選択された四文字熟語
 
-function rand(n){
+rand = (n) => {
     return Math.floor(Math.random() * n);
-}
+};
 
-function show(){
-    for(i=0;i<4;i++){
-	place[i].innerHTML = char[i];
-    }
-    wp = document.getElementById('google');
-    wp.href = "http://www.google.com/search?q=" + word;
-    wp.innerHTML = "「" + word + "」をGoogle検索";
-    wp.style.visibility = 'visible';
-    hidden = false;
-}
-
-function quiz(){
+show_quiz = () => {
+    //
+    // 新しい単語をランダム選んで表示
+    //
     word = words[rand(words.length)];
-    char = word.split('');
-    dispchar = char.slice(0);
-    dispchar[rand(2)+0] = '　';
-    dispchar[rand(2)+2] = '　';
+    var chars = word.split('');
+    chars[rand(2)+0] = '　';
+    chars[rand(2)+2] = '　';
     for(i=0;i<4;i++){
-	place[i].innerHTML = dispchar[i];
+	$('#char'+i).text(chars[i]);
     }
-    document.getElementById('google').style.visibility = 'hidden';
-    hidden = true;
-}
+    $('#google').css('visibility','hidden');
+    $('#query').css("color","#333");
+    $('#query').text("「" + word + "」をGoogle検索");
+    $('#query').attr('href',"http://www.google.com/search?q=" + word);
+};
 
-function google(){
-    location.href = "http://www.google.com/search?q=" + word;
-}
+show_all = () => {
+    //
+    // 解答とGoogleへのリンクを表示
+    //
+    var chars = word.split('');
+    for(i=0;i<4;i++){
+	$('#char'+i).text(chars[i]);
+    }
+    $('#google').css('visibility','visible');
+};
 
-function click(e){
-    if(e.touches){
-	if(e.touches[0].pageY < 50 && !hidden){
-	    google();
-	    return false;
-	}
+click = () => {
+    if($('#google').css('visibility') == 'hidden'){
+	show_all();
     }
     else {
-	if(e.pageX == null && e.clientX != null){
-	    var doc = document.documentElement, body = document.body;
-	    e.pageX = e.clientX + (doc && doc.scrollLeft || body && body.scrollLeft || 0) - (doc.clientLeft || 0);
-	    e.pageY = e.clientY + (doc && doc.scrollTop || body && body.scrollTop || 0) - (doc.clientTop || 0);
-	}
-	if(e.pageY < 50 && !hidden){
-	    google();
-	    return false;
-	}
+	show_quiz();
     }
-    
-    if(hidden &&
-       (e.srcElement && e.srcElement != document.body && e.srcElement.className != 'div' || // iPhone
-	e.target && e.target.className == 'char'))       // 普通のブラウザ
-	show();
-    else {
-	if(e.target.data && e.target.data.match('Google検索') || // iPhone
-	   e.target && e.target.id == 'google')                  // 普通のブラウザ
-	    return false;
-	quiz();
-    }
-}
+};
 
-function move(e){ // iPhoneの場合、指のドラッグでスクロールしないように
-    e.preventDefault();
-    return false;;
-}
+resize = () => {
+    var height = window.innerHeight;  // 表示領域の高さ
+    var width = window.innerWidth;    // 表示領域の幅
+    var size = width;
+    if(height < width) size = height;
 
-document.addEventListener("touchstart", click, false); // iPhone
-document.addEventListener("touchmove", move, false);   
-document.addEventListener("mousedown", click, false);  // 普通のブラウザ
+    rectsize = size * 4 / 10;
+    $('.div').css('height',rectsize);
+    $('.div').css('width',rectsize);
 
-scrollTo(0,0);
-for(i=0;i<4;i++){
-    place[i] = document.getElementById('char'+i);
-}
+    gap = 10;
+    var left = (width - (2 * rectsize + gap)) / 2;
+    var top = 70;
 
-quiz();
+    $('#div0').css('top',top);
+    $('#div0').css('left',left);
+    $('#div1').css('top',top);
+    $('#div1').css('left',left + rectsize + gap);
+    $('#div2').css('top',top + rectsize + gap);
+    $('#div2').css('left',left);
+    $('#div3').css('top',top + rectsize + gap);
+    $('#div3').css('left',left + rectsize + gap);
+
+    $('.char').css('font-size',rectsize * 7 / 10);
+    $('.char').css('left',rectsize * 1 / 10);
+    $('.char').css('top',0);
+};
+
+$(document).ready(() => {
+    $('.char').on('mousedown',(e) => { e.preventDefault(); });
+    $('.char').on('click',click);
+    $(window).on('resize',resize);
+    resize();
+    show_quiz();
+});
+
