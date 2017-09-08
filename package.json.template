@@ -1,12 +1,12 @@
 {
     "name": "four.com.pitecan",
     "displayName": "Four",
-    "version": "1.0.0",
-    "description": "A sample Apache Cordova application that responds to the deviceready event.",
+    "version": "1.0.1",
+    "description": "四文字熟語クイズ",
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
     },
-    "author": "Apache Cordova Team",
+    "author": "Toshiyuki Masui",
     "license": "Apache-2.0"
 }

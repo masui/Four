@@ -54,21 +54,6 @@ icons:
 	convert -scale 144x144 ${ICON} platforms/android/res/mipmap-xxhdpi/icon.png
 	convert -scale 192x192 ${ICON} platforms/android/res/mipmap-xxxhdpi/icon.png
 
-#sign:
-#	cd platforms/android/build/outputs/apk; jarsigner -verbose -keystore .keystore android-release-unsigned.apk ${APPNAME}
-#
-#signcheck:
-#	cd platforms/android/build/outputs/apk; jarsigner -verify -verbose -certs android-release-signed-aligned.apk
-#
-#align:
-#	/Users/masui/Systems/android-sdk-macosx/build-tools/25.0.2/zipalign -v 4 android-release-unsigned.apk
-
-# プロジェクト作成
-# cordova create ${APPNAME} findword.com.pitecan ${APPNAME}
-# Android追加
-# cordova platforms add android
-# cordova plugin add admob
-
 clean:
 	/bin/rm -r -f platforms plugins node_modules package.json config.xml
 
