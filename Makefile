@@ -63,6 +63,6 @@ clean:
 
 setup:
 	/bin/cp config.xml.template config.xml
-│	/bin/cp package.json.template package.json
+	/bin/cp package.json.template package.json
 	cordova platform add android
 	cordova plugin add cordova-plugin-admobpro
