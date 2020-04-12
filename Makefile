@@ -19,6 +19,9 @@ uninstall:
 run:
 	adb shell am start -n four.com.pitecan/.MainActivity
 
+connect:
+	adb connect 192.168.0.6:5555
+
 release: icons
 	/bin/rm -r -f ${APKPATH}/*.apk
 	cordova build android --release
