@@ -7,12 +7,17 @@ PASS=pitecan
 ZIPALIGN=/Users/masui/Systems/android-sdk-macosx/build-tools/25.0.2/zipalign
 KEYSTORE=.keystore
 ICON=images/Four256x256.png
-APKPATH=platforms/android/build/outputs/apk
+#APKPATH=platforms/android/build/outputs/apk
+APKPATH=platforms/android/app/build/outputs/apk/debug
 
-build: icons
+build: setup
 	cordova build android
 install:
 	adb install -r ${APKPATH}/android-debug.apk
+uninstall:
+	adb uninstall four.com.pitecan
+run:
+	adb shell am start -n four.com.pitecan/.MainActivity
 
 release: icons
 	/bin/rm -r -f ${APKPATH}/*.apk
@@ -64,5 +69,4 @@ clean:
 setup:
 	/bin/cp config.xml.template config.xml
 	/bin/cp package.json.template package.json
-	cordova platform add android
-	cordova plugin add cordova-plugin-admobpro
+	-cordova platform add android
